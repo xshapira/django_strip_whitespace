@@ -69,10 +69,10 @@ def html_strip_whitespace(get_response):
 
     # ❌ Compression algorithm is not part of module
     if str(STRIP_WHITESPACE_COMPRESSION_ALGORITHM) not in [
-        str("gzip"),
-        str("br"),
-        str("zstd"),
-        str("plain"),
+        "gzip",
+        "br",
+        "zstd",
+        "plain",
     ]:
         raise ValueError(
             f"""
@@ -97,7 +97,7 @@ def html_strip_whitespace(get_response):
             # Do something here!
             response = await get_response(request)
 
-            if not response.streaming and not request.path in ignored_paths:
+            if not response.streaming and request.path not in ignored_paths:
                 content = minify_html(
                     response.content,
                     # Rust
@@ -125,7 +125,7 @@ def html_strip_whitespace(get_response):
                 )
                 response.content = content
 
-              
+
             return response
 
     else:
@@ -134,7 +134,7 @@ def html_strip_whitespace(get_response):
             # Do something here!
             response: HttpResponse = get_response(request)
 
-            if not response.streaming and not request.path in ignored_paths:
+            if not response.streaming and request.path not in ignored_paths:
                 content = minify_html(
                     response.content,
                     # Rust

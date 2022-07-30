@@ -1,17 +1,14 @@
-def compress(
-    buffer: bytes,
-    algorithm: str("gzip") or str("br") or str("zstd") or str("plain") = str("gzip"),
-) -> bytes:
+def compress(buffer: bytes, algorithm: "gzip" or "br" or "zstd" or "plain" = "gzip") -> bytes:
     # HTML should always be sent in bytes 🔢
     return_buffer: bytes = b""
 
-    if algorithm == str("plain"):
+    if algorithm == "plain":
         """
         If algorithm is text/plain don't do anything 🤷‍♂️
         """
         return_buffer = buffer
 
-    elif algorithm == str("gzip"):
+    elif algorithm == "gzip":
         try:
             from python_strip_whitespace.functions.compressors.gzip import (
                 compress as gz_compress,
@@ -31,7 +28,7 @@ def compress(
 
         return_buffer = gz_compress(buffer)
 
-    elif algorithm == str("br"):
+    elif algorithm == "br":
         try:
             from python_strip_whitespace.functions.compressors.brotli import (
                 compress as br_compress,
@@ -51,7 +48,7 @@ def compress(
 
         return_buffer = br_compress(buffer)
 
-    elif algorithm == str("zstd"):
+    elif algorithm == "zstd":
         try:
             from python_strip_whitespace.functions.compressors.zstd import (
                 compress as zstd_compress,
